@@ -52,6 +52,55 @@ when to observe.
 years of previous observations. Could be useful if you want to analyze some 
 older data. Talk to Prof. Waldrop.
 
+radiative_transfer: the radiative transfer (RT) model (Fortran, called from
+Python) and the exospheric H density retrieval. See the next section to build
+and run it in parallel.
+
+-------------------------------------------------------
+Radiative transfer: building and running in parallel
+
+The RT forward model (`forward`) and line-of-sight model (`los_1x`) are Fortran
+modules compiled with f2py. They are multithreaded with OpenMP and work on
+macOS and Linux.
+
+1) Build the modules (once, and again after any change to the Fortran code):
+
+```bash
+conda env create -f photom.environment.yaml   # first time only
+conda activate photom
+cd radiative_transfer/rt_ft
+./build_1x.sh
+```
+
+`build_1x.sh` builds both modules multithreaded and places them in
+`radiative_transfer/`. The other `build_*.sh` scripts build the forward model
+multithreaded but their LOS model single-threaded (see
+`radiative_transfer/rt_ft/README.md`). Without conda (Debian/Ubuntu), install
+`gfortran liblapack-dev python3-dev` with apt and `numpy meson ninja` with pip,
+then run `./build_1x.sh`.
+
+2) Run as usual. By default every forward and LOS call uses all CPU cores; no
+code changes are needed. Set `OMP_NUM_THREADS` to use fewer threads:
+
+```bash
+python osse_test.py                    # all cores
+OMP_NUM_THREADS=4 python osse_test.py  # 4 threads
+```
+
+- `rt_inversion.inversion_init(..., cores=N)` inverts the wedges in N worker
+  processes and gives each worker cores/N threads automatically (unless
+  `OMP_NUM_THREADS` is already set). Its workers use the `spawn` start method,
+  so scripts that call it need an `if __name__ == "__main__":` guard.
+- If you start your own worker processes, set `OMP_NUM_THREADS` to roughly
+  cores / number of workers, and use the `spawn` start method on Linux: GNU
+  OpenMP hangs in workers created with the default `fork`.
+- The `ncore` argument of `rt_common.run_forward_los` / `run_los` has no
+  effect; the parallelism comes from the OpenMP threads.
+
+On a 12-core M2 Max, one forward model takes about 0.9 s (34 s with the
+original single-threaded code) and the retrieval in `osse_test.py` takes about
+15 s (about 10 min before).
+
 -------------------------------------------------------
 In the "scip_operation" folder:
 
