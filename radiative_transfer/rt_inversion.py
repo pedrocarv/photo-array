@@ -1,5 +1,6 @@
 # !/usr/bin/env python3
 
+import os
 import numpy as np
 import scipy as sp
 import warnings
@@ -175,8 +176,18 @@ def inversion_init(image, orbit_info, tpgse, solar_activity, solar_flux, model='
     items = [(tpgse[ii], image[:,ii], orbit_info[:,ii,:], solar_flux, solar_activity, model) for ii in
             range(nth)]
     if cores > 0:
-        with Pool(processes=cores) as pool:
-            res = pool.starmap(optimize_profile, items)
+        # The Fortran RT code is OpenMP-threaded; give each worker process an equal
+        # share of the CPUs so cores x threads doesn't oversubscribe the machine.
+        # Workers inherit the environment, and an explicit OMP_NUM_THREADS is kept.
+        set_omp = 'OMP_NUM_THREADS' not in os.environ
+        if set_omp:
+            os.environ['OMP_NUM_THREADS'] = str(max(1, (os.cpu_count() or 1) // cores))
+        try:
+            with Pool(processes=cores) as pool:
+                res = pool.starmap(optimize_profile, items)
+        finally:
+            if set_omp:
+                del os.environ['OMP_NUM_THREADS']
     else:
         res_all = []
         for ii in range(nth):
