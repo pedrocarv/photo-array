@@ -5,7 +5,7 @@ import numpy as np
 import scipy as sp
 import warnings
 # warnings.filterwarnings("ignore")
-from multiprocessing import Pool
+import multiprocessing
 
 import radiative_transfer.rt_common as rt_common
 import radiative_transfer.rt_msis as rt_msis
@@ -187,7 +187,10 @@ def inversion_init(image, orbit_info, tpgse, solar_activity, solar_flux, model='
         for v in set_vars:
             os.environ[v] = per_worker
         try:
-            with Pool(processes=cores) as pool:
+            # 'spawn' (the macOS default) instead of Linux's 'fork': GNU OpenMP
+            # (libgomp) is not fork-safe, and a worker forked after this process
+            # has run the Fortran code hangs in its first parallel region.
+            with multiprocessing.get_context('spawn').Pool(processes=cores) as pool:
                 res = pool.starmap(optimize_profile, items)
         finally:
             for v in set_vars:

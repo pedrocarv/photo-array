@@ -63,7 +63,9 @@ model: OpenMP places their large local arrays (about 11 x MAXLOS x 8 bytes in th
 overflows it.
 
 The number of threads is `OMP_NUM_THREADS` (default: all cores). `rt_inversion.inversion_init` splits the cores
-between its worker processes automatically.
+between its worker processes automatically. Its process pool uses the `spawn` start method on every platform: on
+Linux the default `fork` hangs once the parent process has run the OpenMP code (GNU libgomp is not fork-safe), so
+scripts that call it need the usual `if __name__ == "__main__":` guard.
 
 On Debian/Ubuntu without conda, install the compilers and LAPACK with
 `sudo apt install gfortran liblapack-dev python3-dev` (or `libopenblas-dev` for a faster LAPACK), plus

@@ -3,7 +3,7 @@
 
 import numpy as np
 import warnings
-from multiprocessing import Pool
+import multiprocessing
 import importlib
 
 
@@ -245,7 +245,8 @@ def run_los(h_model, orbit_info, solar_flux, exopt, cdens, thermo, brad, bchi, c
         # No rt_bkg
         items = [(max_los, 7, solar_flux, orbitp, exopt, cdens, thermo, brad, bchi, chin, rhot,
                   ts, rt_params_int, rt_params_real, ap_hist, thermo_bkg, zgrid) for orbitp in orbit_par]
-        with Pool(processes=ncore) as pool:
+        # 'spawn': GNU OpenMP (libgomp) is not fork-safe, see rt_inversion.inversion_init
+        with multiprocessing.get_context('spawn').Pool(processes=ncore) as pool:
             res = pool.starmap(los_parallel, items)
 
         los_results = np.vstack(res)
