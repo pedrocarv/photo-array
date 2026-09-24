@@ -235,5 +235,8 @@ C       ABSCSX . . . ABSORBER PHOTOABSORPTION CROSS SECTION
         CENTER = ABSIC * DBLE(FNUMBER*WAVELN) * 1.0d-8 / RTPI / VELT
         ABSCSX = DBLE(ABS_O2)
 
+C       Tabulate the exosphere density profile used by CORONA
+        CALL CORONA_INIT
+
         END SUBROUTINE global_parameters
 C END FILE global_parameters.F
