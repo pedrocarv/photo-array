@@ -1,0 +1,63 @@
+Release 1.5.1
+
+Changelog:
+Release 1.5.1
+    Python SDK:    1.5.1
+        - coincides with C/C++ SDK 2024.11.26.2038
+            - Added Apx60 CLC
+            - IMX533/571 based cameras startup quicker whilst imaging
+Release 1.5.0
+    Python SDK:    1.5.0
+        - added a new function (get_serial_str) that retrieves the serial number of a camera as a string
+        - get_serial is depreceated in favour of get_serial_str
+Release 1.4.1
+    Python SDK:    1.4.1
+        - coincides with C/C++ SDK 2024.08.30.1920
+Release 1.4
+    Python SDK:    1.4.0
+        - added set_te_preview_gain_offset, get_te_preview_gain_offset, and get_te_preview_gain_offset functions
+Release 1.3
+    Python SDK:    1.3.0
+        - added start_exposure, start_exposure_ms, image_ready, get_image functions
+        - fixed issue with the output of the cooling flags return from the cooling_info function
+Release 1.2
+    Python SDK:    1.2.0
+        - added get_te_readout_mode and set_te_readout_mode functions for the TE series cameras.
+Release 1.1
+    Python SDK:    1.1.0
+        - added check_efw_moving
+        - changed return type of efw_device_details
+        - get_16bit_mode now returns SixteenBitMode enum name rather than int
+Release 1.0
+    Python SDK:    1.0.0
+        - Full coverage of the C API.
+Release 0.7
+    Python SDK:    0.7.0
+        - added get_firmware_version
+        - added 16bit mode functions for ChemiMOS
+        - added fast mode
+Release 0.6 (C/C++ SDK 2021.11.16)
+    Python SDK:    0.6.0
+        - added has_pad_data 
+        - added {set|get}_exposure_speed functionality that will work with our Horizon/ACIS/APX/TE cameras.
+    Prerequisites: 0.5.0
+        - fixed issue where the installer would try to install to SysWOW64 on a 64 bit system.
+Release 0.5 (C/C++ SDK 2021.11.16)
+    Python SDK:    0.5.0
+        - set_gain_offset fixed
+    Prerequisites: 0.4.0
+Release 0.4
+    Python SDK:    0.4.0
+        - set_gain_offset fixed
+    Prerequisites: 0.4.0
+        - Updated to version 2021.11.16 of the C/C++ SDK (BETA).
+Release 0.3
+Release 0.2
+    Python SDK:    0.2.0
+        - Added the ability to set the gain and offset globally for all cameras via set_gain_offset() function
+        - Added the ability to Pad Data (12bit -> 16bit) for our Horizon & ACIS series cameras
+    Prerequisites: 0.2.0    
+Release 0.1
+
+
+

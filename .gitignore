@@ -1,0 +1,16 @@
+__pycache__
+scip/data_processing/__pycache__
+scip/SCIP_operation/__pycache__
+*/__pycache__
+
+*.pyc 
+*.so
+
+# Data files and vendor binaries (kept on disk, not in git)
+*.npy
+*.fits
+*.dll
+*.exe
+*.lib
+*.o
+.DS_Store

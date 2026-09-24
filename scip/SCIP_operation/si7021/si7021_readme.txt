@@ -1,0 +1,1 @@
+The file si7021.ino is for the ardiuno to interface with the adafruit temperature/humidity sensor (part number si7021). Download the Arduino IDE to edit and reload the code onto the Arduino. 

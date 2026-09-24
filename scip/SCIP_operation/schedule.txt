@@ -1,0 +1,87 @@
+# Add new obsering sessions by pasting them at the end of this file
+# Use the same formatting!
+# All dates and times in UTC
+# Exposure times in seconds
+# only accepted direction is zenith
+# all keywords must be present
+
+[Feild Site Test - No Cal Stars]
+instrument: SCIP
+observer: Dawn Haken
+folder name: no_cal_stars
+lat: 40.167400
+lon: -88.159047
+elev: 219
+conj_lat: -61.48
+conj_lon: -103.14
+start: 02/17/2020 18:00:00
+end: 02/24/2020 18:00:00
+observation direction: zenith
+airglow exposure time: 100
+calibration star exposure time: 60
+airglow images per cal star: 10
+
+[Field Site Test - Sept]
+instrument: SCIP
+observer: Dawn Haken
+lat: 40.167400
+lon: -88.159047
+elev: 219
+conj_lat: -61.48
+conj_lon: -103.14
+start: 09/04/2020 18:00:00
+end: 09/10/2020 18:00:00
+observation direction: zenith
+airglow exposure time: 100
+calibration star exposure time: 60
+airglow images per cal star: 10
+
+
+[Field Site Test - Sept Part 2]
+instrument: SCIP
+observer: Dawn Haken
+folder name: field_site_test_sept_pt2
+lat: 40.167400
+lon: -88.159047
+elev: 219
+conj_lat: -61.48
+conj_lon: -103.14
+start: 09/18/2020 17:00:00
+end: 09/19/2020 17:00:00
+observation direction: zenith
+airglow exposure time: 100
+calibration star exposure time: 60
+airglow images per cal star: 10
+
+
+[Field Site Test - longer exp]
+instrument: SCIP
+observer: Dawn Haken
+folder name: field_site_test_long_exp
+lat: 40.167400
+lon: -88.159047
+elev: 219
+conj_lat: -61.48
+conj_lon: -103.14
+start: 09/18/2020 17:00:00
+end: 09/25/2020 17:00:00
+observation direction: zenith
+airglow exposure time: 200
+calibration star exposure time: 60
+airglow images per cal star: 10
+
+[Week long observation session July 2021]
+instrument: SCIP
+observer: Robert Irvin
+folder name: field_site_test_long_exp
+lat: 40.167400
+lon: -88.159047
+elev: 219
+conj_lat: -61.48
+conj_lon: -103.14
+start: 09/18/2020 17:00:00
+end: 09/25/2020 17:00:00
+observation direction: zenith
+airglow exposure time: 200
+calibration star exposure time: 60
+airglow images per cal star: 10

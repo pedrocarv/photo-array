@@ -1,0 +1,31 @@
+name: photom
+
+channels:
+  - conda-forge
+  - nodefaults
+
+dependencies:
+  - python=3.11
+  - numpy
+  - pandas
+  - matplotlib
+  - astropy
+  - sunpy
+  - scipy
+  - scikit-image
+  - pywavelets
+  - xarray
+  - netcdf4
+  - requests
+  - ccdproc
+  - astroplan
+  - photutils
+  - ipython
+  - ipdb
+  - gfortran
+  - meson
+  - ninja
+  - pip
+  - pip:
+      - pymsis
+      - pyserial

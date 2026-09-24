@@ -1,0 +1,84 @@
+Conjugate sunset  : 03/16/2020 18:10:21
+Local sunset      : 03/16/2020 18:31:23
+Conjugate sunrise : 03/17/2020 05:53:24
+Local sunrise     : 03/17/2020 06:27:21
+
+
+Conjugate sunset  : 03/17/2020 18:08:42
+Local sunset      : 03/17/2020 18:31:37
+Conjugate sunrise : 03/18/2020 05:54:28
+Local sunrise     : 03/18/2020 06:26:32
+
+
+Conjugate sunset  : 03/18/2020 18:07:04
+Local sunset      : 03/18/2020 18:31:51
+Conjugate sunrise : 03/19/2020 05:55:31
+Local sunrise     : 03/19/2020 06:25:43
+
+
+Conjugate sunset  : 03/19/2020 18:05:26
+Local sunset      : 03/19/2020 18:32:05
+Conjugate sunrise : 03/20/2020 05:56:35
+Local sunrise     : 03/20/2020 06:24:54
+
+
+Conjugate sunset  : 03/20/2020 18:03:47
+Local sunset      : 03/20/2020 18:32:19
+Conjugate sunrise : 03/21/2020 05:57:38
+Local sunrise     : 03/21/2020 06:24:05
+
+
+Conjugate sunset  : 03/21/2020 18:02:09
+Local sunset      : 03/21/2020 18:32:32
+Conjugate sunrise : 03/22/2020 05:58:40
+Local sunrise     : 03/22/2020 06:23:16
+
+
+Conjugate sunset  : 03/22/2020 18:00:31
+Local sunset      : 03/22/2020 18:32:46
+Conjugate sunrise : 03/23/2020 05:59:43
+Local sunrise     : 03/23/2020 06:22:27
+
+
+Conjugate sunset  : 03/23/2020 17:58:52
+Local sunset      : 03/23/2020 18:32:59
+Conjugate sunrise : 03/24/2020 06:00:46
+Local sunrise     : 03/24/2020 06:21:37
+
+
+Conjugate sunset  : 03/24/2020 17:57:14
+Local sunset      : 03/24/2020 18:33:12
+Conjugate sunrise : 03/25/2020 06:01:48
+Local sunrise     : 03/25/2020 06:20:48
+
+
+Conjugate sunset  : 03/25/2020 17:55:36
+Local sunset      : 03/25/2020 18:33:26
+Conjugate sunrise : 03/26/2020 06:02:50
+Local sunrise     : 03/26/2020 06:19:59
+
+
+Conjugate sunset  : 03/26/2020 17:53:57
+Local sunset      : 03/26/2020 18:33:39
+Conjugate sunrise : 03/27/2020 06:03:52
+Local sunrise     : 03/27/2020 06:19:09
+
+
+Conjugate sunset  : 03/27/2020 17:52:19
+Local sunset      : 03/27/2020 18:33:52
+Conjugate sunrise : 03/28/2020 06:04:54
+Local sunrise     : 03/28/2020 06:18:20
+
+
+Conjugate sunset  : 03/28/2020 17:50:42
+Local sunset      : 03/28/2020 18:34:05
+Conjugate sunrise : 03/29/2020 06:05:56
+Local sunrise     : 03/29/2020 06:17:31
+
+
+Conjugate sunset  : 03/29/2020 17:49:04
+Local sunset      : 03/29/2020 18:34:19
+Conjugate sunrise : 03/30/2020 06:06:58
+Local sunrise     : 03/30/2020 06:16:42
+
+
