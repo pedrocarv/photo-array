@@ -39,14 +39,22 @@ Numpy migrates to Meson build system: https://numpy.org/devdocs/f2py/buildtools/
 2) Compile the forward and los models
 
 ```
-FC="gfortran" python -m numpy.f2py -c subroutines_lyao.f corona.f global_parameters.f lyao_rt.f -m forward --backend meson --dep openmp --dep lapack
+source lapack_flags.sh
+FC="gfortran" python -m numpy.f2py -c subroutines_lyao.f corona.f global_parameters.f lyao_rt.f -m forward --backend meson --dep openmp "${F2PY_LAPACK[@]}"
 FC="gfortran" python -m numpy.f2py -c subroutines_lyao.f lyao_los.f corona.f global_parameters.f driver_los_lyao_inv6.f -m los_inv6 --backend meson
 ```
 
 Build dependencies of the forward model (`lyao_rt.f`):
 
-- `--dep lapack` is **required**: the source-function matrix is factored with LAPACK `DGETRF`. Without it the
-  module compiles but fails to import (undefined symbol `dgetrf_`). On macOS meson links Apple's Accelerate.
+- **LAPACK is required**: the source-function matrix is factored with LAPACK `DGETRF`. Without it the module
+  compiles but fails to import (undefined symbol `dgetrf_`). `lapack_flags.sh` sets the link options in
+  `F2PY_LAPACK` (all `build_*.sh` scripts source it):
+  - inside a conda env: the env's LAPACK (`-L$CONDA_PREFIX/lib -llapack`, OpenBLAS on conda-forge) plus an rpath;
+  - otherwise the system LAPACK (`-llapack`): Accelerate on macOS, `liblapack-dev` or `libopenblas-dev` on
+    Debian/Ubuntu.
+
+  It doesn't use meson's `--dep lapack`, which only searches pkg-config and fails in conda envs (conda-forge's
+  `liblapack` ships no `lapack.pc`).
 - `--dep openmp` is optional and makes the forward model multithreaded (without it, it runs on one core).
 
 The LOS model (`lyao_los.f`) can also be built with `--dep openmp`, as `build_1x.sh` does. Don't use it with the
@@ -56,6 +64,10 @@ overflows it.
 
 The number of threads is `OMP_NUM_THREADS` (default: all cores). `rt_inversion.inversion_init` splits the cores
 between its worker processes automatically.
+
+On Debian/Ubuntu without conda, install the compilers and LAPACK with
+`sudo apt install gfortran liblapack-dev python3-dev` (or `libopenblas-dev` for a faster LAPACK), plus
+`pip install numpy meson ninja`.
 
 Coveniently you can run one of the build shell scripts:  **build_1x.sh**,  **build_nfi.sh**,  **build_wfi.sh** or inversion **build_inv6.sh**
 
