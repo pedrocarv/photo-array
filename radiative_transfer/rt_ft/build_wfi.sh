@@ -15,7 +15,7 @@
 #python -m numpy.f2py -c -m los_wfi subroutines_lyao.f lyao_los.f corona.f global_parameters.f driver_los_lyao_wfi.f
 
 # Migration to Meson build system: https://numpy.org/devdocs/f2py/buildtools/distutils-to-meson.html#f2py-meson-distutils
-FC="gfortran" python -m numpy.f2py -c subroutines_lyao.f corona.f global_parameters.f lyao_rt.f -m forward --backend meson
+FC="gfortran" python -m numpy.f2py -c subroutines_lyao.f corona.f global_parameters.f lyao_rt.f -m forward --backend meson --dep openmp --dep lapack
 FC="gfortran" python -m numpy.f2py -c subroutines_lyao.f lyao_los.f corona.f global_parameters.f driver_los_lyao_wfi.f -m los_wfi --backend meson
 
 mv forward* ../

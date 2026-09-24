@@ -25,10 +25,12 @@ cd /path_to_RT_code_folder
 2) Compile the forward and los models executable through Python.
 
 ```
-python -m numpy.f2py -c subroutines_lyao.f corona.f global_parameters.f lyao_rt.f -m forward
+python -m numpy.f2py -c subroutines_lyao.f corona.f global_parameters.f lyao_rt.f -m forward -llapack
 python -m numpy.f2py -c subroutines_lyao.f lyao_los.f corona.f global_parameters.f driver_los_lyao_inv6.f -m los_inv6 --backend meson
 
 ```
+
+These distutils builds are single-threaded (no OpenMP).
 
 #### Using 'meson'
 
@@ -37,9 +39,23 @@ Numpy migrates to Meson build system: https://numpy.org/devdocs/f2py/buildtools/
 2) Compile the forward and los models
 
 ```
-FC="gfortran" python -m numpy.f2py -c subroutines_lyao.f corona.f global_parameters.f lyao_rt.f -m forward --backend meson
+FC="gfortran" python -m numpy.f2py -c subroutines_lyao.f corona.f global_parameters.f lyao_rt.f -m forward --backend meson --dep openmp --dep lapack
 FC="gfortran" python -m numpy.f2py -c subroutines_lyao.f lyao_los.f corona.f global_parameters.f driver_los_lyao_inv6.f -m los_inv6 --backend meson
 ```
+
+Build dependencies of the forward model (`lyao_rt.f`):
+
+- `--dep lapack` is **required**: the source-function matrix is factored with LAPACK `DGETRF`. Without it the
+  module compiles but fails to import (undefined symbol `dgetrf_`). On macOS meson links Apple's Accelerate.
+- `--dep openmp` is optional and makes the forward model multithreaded (without it, it runs on one core).
+
+The LOS model (`lyao_los.f`) can also be built with `--dep openmp`, as `build_1x.sh` does. Don't use it with the
+large fixed-`MAXLOS` drivers (e.g. `driver_los_lyao_65536.f`, `driver_los_lyao_131072.f`) or the hres forward
+model: OpenMP places their large local arrays (about 11 x MAXLOS x 8 bytes in the drivers) on the stack, which
+overflows it.
+
+The number of threads is `OMP_NUM_THREADS` (default: all cores). `rt_inversion.inversion_init` splits the cores
+between its worker processes automatically.
 
 Coveniently you can run one of the build shell scripts:  **build_1x.sh**,  **build_nfi.sh**,  **build_wfi.sh** or inversion **build_inv6.sh**
 

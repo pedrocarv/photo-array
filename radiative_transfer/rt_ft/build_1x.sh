@@ -22,10 +22,11 @@ set -euo pipefail
 # (thread count: OMP_NUM_THREADS, default all cores). Not used for the fixed
 # MAXLOS drivers or the hres forward: OpenMP moves their large local arrays
 # onto the stack, which overflows it.
+# --dep lapack: lyao_rt.f factors the source-function matrix with DGETRF.
 # forward
 FC="${FC:-gfortran}" python -m numpy.f2py -c -m forward \
     subroutines_lyao.f corona.f global_parameters.f lyao_rt.f \
-    --backend meson --dep openmp
+    --backend meson --dep openmp --dep lapack
 # los
 FC="${FC:-gfortran}" python -m numpy.f2py -c -m los_1x \
     subroutines_lyao.f lyao_los.f corona.f global_parameters.f \

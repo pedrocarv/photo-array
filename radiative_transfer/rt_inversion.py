@@ -176,18 +176,22 @@ def inversion_init(image, orbit_info, tpgse, solar_activity, solar_flux, model='
     items = [(tpgse[ii], image[:,ii], orbit_info[:,ii,:], solar_flux, solar_activity, model) for ii in
             range(nth)]
     if cores > 0:
-        # The Fortran RT code is OpenMP-threaded; give each worker process an equal
-        # share of the CPUs so cores x threads doesn't oversubscribe the machine.
-        # Workers inherit the environment, and an explicit OMP_NUM_THREADS is kept.
-        set_omp = 'OMP_NUM_THREADS' not in os.environ
-        if set_omp:
-            os.environ['OMP_NUM_THREADS'] = str(max(1, (os.cpu_count() or 1) // cores))
+        # The Fortran RT code is OpenMP-threaded and its LU solve uses a threaded
+        # LAPACK (Accelerate on macOS, usually OpenBLAS on Linux); give each worker
+        # process an equal share of the CPUs so cores x threads doesn't
+        # oversubscribe the machine. Workers inherit the environment, and thread
+        # counts the user set explicitly are kept.
+        per_worker = str(max(1, (os.cpu_count() or 1) // cores))
+        set_vars = [v for v in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS')
+                    if v not in os.environ]
+        for v in set_vars:
+            os.environ[v] = per_worker
         try:
             with Pool(processes=cores) as pool:
                 res = pool.starmap(optimize_profile, items)
         finally:
-            if set_omp:
-                del os.environ['OMP_NUM_THREADS']
+            for v in set_vars:
+                del os.environ[v]
     else:
         res_all = []
         for ii in range(nth):
