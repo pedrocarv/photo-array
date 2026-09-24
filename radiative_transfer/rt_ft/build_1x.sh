@@ -18,14 +18,18 @@ set -euo pipefail
 #     inversion     6 (INV6   MAXLOS = 6)
 # It also reads orbitinfo.txt (no more _1x, NFI_parallel etc.)
 
+# --dep openmp enables the multithreaded loops in lyao_rt.f and lyao_los.f
+# (thread count: OMP_NUM_THREADS, default all cores). Not used for the fixed
+# MAXLOS drivers or the hres forward: OpenMP moves their large local arrays
+# onto the stack, which overflows it.
 # forward
 FC="${FC:-gfortran}" python -m numpy.f2py -c -m forward \
     subroutines_lyao.f corona.f global_parameters.f lyao_rt.f \
-    --backend meson
+    --backend meson --dep openmp
 # los
 FC="${FC:-gfortran}" python -m numpy.f2py -c -m los_1x \
     subroutines_lyao.f lyao_los.f corona.f global_parameters.f \
-    driver_los_lyao_1x.f --backend meson
+    driver_los_lyao_1x.f --backend meson --dep openmp
 
 mv forward*.so ../
 mv los_1x*.so ../
